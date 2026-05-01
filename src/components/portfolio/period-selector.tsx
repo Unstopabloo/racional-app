@@ -15,15 +15,15 @@ interface PeriodSelectorProps {
 
 export function PeriodSelector({ value, onChange }: PeriodSelectorProps) {
   return (
-    <div className="flex items-center gap-1 rounded-full bg-gray-100/60 p-1">
+    <div className="inline-flex items-center gap-1 rounded-full border border-[var(--border)] p-1">
       {PERIODS.map((period) => (
         <button
           key={period.value}
           onClick={() => onChange(period.value)}
-          className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all ${
+          className={`rounded-full px-4 py-1.5 text-xs font-medium tracking-wide transition-all ${
             value === period.value
-              ? 'bg-neutral-900 text-white shadow-sm'
-              : 'text-neutral-500 hover:text-neutral-900'
+              ? 'bg-[var(--racional-teal)] text-[var(--background)] shadow-[0_0_16px_oklch(0.78_0.14_75/0.35)]'
+              : 'text-[var(--muted-foreground)] hover:text-[var(--foreground)]'
           }`}
         >
           {period.label}

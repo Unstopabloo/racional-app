@@ -4,8 +4,6 @@ import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 
-import '../styles.css'
-
 interface AppRouterContext {
   queryClient: QueryClient
 }

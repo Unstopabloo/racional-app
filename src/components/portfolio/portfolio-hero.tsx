@@ -1,4 +1,4 @@
-import { TrendingDown, TrendingUp } from 'lucide-react'
+import { TrendingUp, TrendingDown } from 'lucide-react'
 import type { PortfolioMetrics } from '@/core/investment-evolution/investment-evolution.domain'
 import { formatCurrency, formatPercent } from '@/lib/format'
 
@@ -10,11 +10,11 @@ interface PortfolioHeroProps {
 export function PortfolioHero({ metrics, isLoading }: PortfolioHeroProps) {
   if (isLoading) {
     return (
-      <div className="text-center">
-        <p className="text-sm font-medium uppercase tracking-wider text-neutral-400">
+      <div className="relative py-20 text-center">
+        <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-[var(--racional-gray)]">
           Total inversiones
         </p>
-        <div className="mx-auto mt-2 h-14 w-64 animate-pulse rounded-lg bg-neutral-100" />
+        <div className="mt-4 mx-auto h-16 w-80 animate-pulse rounded-lg bg-[var(--muted)]" />
       </div>
     )
   }
@@ -25,37 +25,51 @@ export function PortfolioHero({ metrics, isLoading }: PortfolioHeroProps) {
   const Icon = isPositive ? TrendingUp : TrendingDown
 
   return (
-    <div className="text-center">
-      <p className="text-sm font-medium uppercase tracking-wider text-neutral-400">
+    <div className="relative py-20 text-center">
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(ellipse 80% 60% at 50% 45%, oklch(0.78 0.14 75 / 0.10) 0%, transparent 70%)',
+        }}
+      />
+
+      <p className="relative text-[10px] font-medium uppercase tracking-[0.3em] text-[var(--racional-gray)]">
         Total inversiones
       </p>
-      <p className="mt-1 text-5xl font-bold tracking-tight text-neutral-900">
+
+      <p
+        className="relative mt-3 leading-none"
+        style={{
+          fontFamily: "'Rogue', serif",
+          fontSize: 'clamp(5rem, 14vw, 12rem)',
+          color: 'var(--foreground)',
+          letterSpacing: '-0.02em',
+          textShadow: '0 0 80px oklch(0.78 0.14 75 / 0.15)',
+        }}
+      >
         {formatCurrency(metrics.currentValue)}
       </p>
-      <div className="mt-3 flex items-center justify-center gap-2">
+
+      <div className="relative mt-8 flex items-center justify-center gap-3">
         <span
-          className={`inline-flex items-center gap-1 text-base font-medium ${
+          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium ${
             isPositive
-              ? 'text-[var(--racional-teal)]'
-              : 'text-[var(--racional-red)]'
+              ? 'bg-[oklch(0.78_0.14_75/0.1)] text-[var(--racional-teal)]'
+              : 'bg-[oklch(0.58_0.14_25/0.1)] text-[var(--racional-red)]'
           }`}
         >
-          <Icon className="size-4" />
+          <Icon className="size-3.5" />
           {isPositive ? '+' : ''}
           {formatPercent(metrics.totalReturnPct)}
         </span>
-        <span className="text-sm text-neutral-400">&middot;</span>
-        <span
-          className={`text-sm font-medium ${
-            isPositive
-              ? 'text-[var(--racional-teal)]'
-              : 'text-[var(--racional-red)]'
-          }`}
-        >
+        <span className="text-sm text-[var(--muted-foreground)]">
           {isPositive ? '+' : ''}
           {formatCurrency(metrics.totalReturn)}
         </span>
-        <span className="text-sm text-neutral-400">desde el inicio</span>
+        <span className="text-xs text-[var(--racional-gray)]">
+          desde el inicio
+        </span>
       </div>
     </div>
   )

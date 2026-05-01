@@ -1,4 +1,4 @@
-import { Bar, BarChart, Cell, XAxis } from 'recharts'
+import { Bar, BarChart, XAxis, Cell } from 'recharts'
 import {
   ChartContainer,
   ChartTooltip,
@@ -25,9 +25,13 @@ function ReturnsTooltip({ active, payload }: any) {
   const isPositive = value >= 0
 
   return (
-    <div className="rounded-lg border border-neutral-100 bg-white px-3 py-2 shadow-lg shadow-black/5">
+    <div className="rounded-lg border border-[var(--border)] bg-[var(--popover)] px-3 py-2 shadow-xl shadow-black/40">
       <span
-        className={`text-sm font-medium ${isPositive ? 'text-[var(--racional-teal)]' : 'text-[var(--racional-red)]'}`}
+        className={`text-sm font-medium ${
+          isPositive
+            ? 'text-[var(--racional-teal)]'
+            : 'text-[var(--racional-red)]'
+        }`}
       >
         {isPositive ? '+' : ''}
         {value.toFixed(2).replace('.', ',')}%
@@ -44,28 +48,26 @@ export function PortfolioReturns({ data }: PortfolioReturnsProps) {
   }))
 
   return (
-    <ChartContainer config={chartConfig} className="min-h-[120px] w-full">
+    <ChartContainer config={chartConfig} className="min-h-[100px] w-full">
       <BarChart
         data={chartData}
-        margin={{ top: 4, right: 8, left: 8, bottom: 0 }}
+        margin={{ top: 4, right: 12, left: 12, bottom: 0 }}
         syncId="portfolio"
       >
         <XAxis
           dataKey="dateLabel"
           axisLine={false}
           tickLine={false}
-          tick={{ fontSize: 11, fill: 'var(--racional-gray)' }}
+          tick={{ fontSize: 10, fill: 'var(--racional-gray)' }}
           tickFormatter={(value: number) => {
             const date = new Date(value)
-            return new Intl.DateTimeFormat('es-CL', { month: 'short' }).format(
-              date,
-            )
+            return new Intl.DateTimeFormat('es-CL', { month: 'short' }).format(date)
           }}
           tickMargin={8}
-          minTickGap={40}
+          minTickGap={50}
         />
         <ChartTooltip content={<ReturnsTooltip />} cursor={false} />
-        <Bar dataKey="returnPct" radius={[2, 2, 0, 0]} maxBarSize={3}>
+        <Bar dataKey="returnPct" radius={[1, 1, 0, 0]} maxBarSize={2.5}>
           {chartData.map((entry, index) => (
             <Cell
               key={index}
@@ -74,6 +76,7 @@ export function PortfolioReturns({ data }: PortfolioReturnsProps) {
                   ? 'var(--racional-teal)'
                   : 'var(--racional-red)'
               }
+              opacity={0.8}
             />
           ))}
         </Bar>

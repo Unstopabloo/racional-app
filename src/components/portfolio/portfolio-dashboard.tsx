@@ -21,29 +21,48 @@ export function PortfolioDashboard() {
     return (
       <div className="flex min-h-[400px] items-center justify-center">
         <div className="text-center">
-          <p className="text-lg font-medium text-neutral-900">
+          <p className="text-lg font-medium text-[var(--foreground)]">
             Error al cargar datos
           </p>
-          <p className="mt-1 text-sm text-neutral-400">{error.message}</p>
+          <p className="mt-2 text-sm text-[var(--muted-foreground)]">
+            {error.message}
+          </p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="space-y-8">
-      <PortfolioHero metrics={metrics} isLoading={isLoading} />
+    <div className="space-y-12">
+      <div className="animate-fade-up" style={{ animationDelay: '0.1s' }}>
+        <PortfolioHero metrics={metrics} isLoading={isLoading} />
+      </div>
 
-      <div className="flex justify-center">
+      <div
+        className="flex justify-center animate-fade-up"
+        style={{ animationDelay: '0.2s' }}
+      >
         <PeriodSelector value={period} onChange={setPeriod} />
       </div>
 
       {!isLoading && filteredData.length > 0 && (
         <>
-          <PortfolioChart data={filteredData} />
+          <div className="animate-fade-up" style={{ animationDelay: '0.3s' }}>
+            <PortfolioChart data={filteredData} />
+          </div>
 
-          <div>
-            <h3 className="text-lg font-semibold text-neutral-900">
+          <div className="animate-fade-up" style={{ animationDelay: '0.35s' }}>
+            <div className="flex items-center gap-6 py-4">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[var(--border)] to-transparent" />
+              <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-[var(--racional-gray)]">
+                Análisis
+              </span>
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[var(--border)] to-transparent" />
+            </div>
+          </div>
+
+          <div className="animate-fade-up" style={{ animationDelay: '0.4s' }}>
+            <h3 className="text-[10px] font-medium uppercase tracking-[0.3em] text-[var(--racional-gray)]">
               Retorno diario
             </h3>
             <div className="mt-4">
@@ -51,13 +70,15 @@ export function PortfolioDashboard() {
             </div>
           </div>
 
-          <PortfolioStats metrics={metrics} />
+          <div className="animate-fade-up" style={{ animationDelay: '0.5s' }}>
+            <PortfolioStats metrics={metrics} />
+          </div>
         </>
       )}
 
       {isLoading && (
-        <div className="flex min-h-[350px] items-center justify-center">
-          <div className="size-8 animate-spin rounded-full border-2 border-neutral-200 border-t-[var(--racional-teal)]" />
+        <div className="flex min-h-[380px] items-center justify-center">
+          <div className="size-6 animate-spin rounded-full border border-[var(--border)] border-t-[var(--racional-teal)]" />
         </div>
       )}
     </div>
