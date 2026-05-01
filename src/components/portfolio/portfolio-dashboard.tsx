@@ -8,8 +8,6 @@ import {
 import { PeriodSelector } from './period-selector'
 import { PortfolioHero } from './portfolio-hero'
 import { PortfolioChart } from './portfolio-chart'
-import { PortfolioReturns } from './portfolio-returns'
-import { PortfolioStats } from './portfolio-stats'
 
 export function PortfolioDashboard() {
   const { data, isLoading, error } = useInvestmentEvolution()
@@ -35,7 +33,7 @@ export function PortfolioDashboard() {
   return (
     <div className="space-y-12">
       <div className="animate-fade-up" style={{ animationDelay: '0.1s' }}>
-        <PortfolioHero metrics={metrics} isLoading={isLoading} />
+        <PortfolioHero metrics={metrics} isLoading={isLoading} period={period} />
       </div>
 
       <div
@@ -51,28 +49,6 @@ export function PortfolioDashboard() {
             <PortfolioChart data={filteredData} />
           </div>
 
-          <div className="animate-fade-up" style={{ animationDelay: '0.35s' }}>
-            <div className="flex items-center gap-6 py-4">
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[var(--border)] to-transparent" />
-              <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-[var(--racional-gray)]">
-                Análisis
-              </span>
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[var(--border)] to-transparent" />
-            </div>
-          </div>
-
-          <div className="animate-fade-up" style={{ animationDelay: '0.4s' }}>
-            <h3 className="text-[10px] font-medium uppercase tracking-[0.3em] text-[var(--racional-gray)]">
-              Retorno diario
-            </h3>
-            <div className="mt-4">
-              <PortfolioReturns data={filteredData} />
-            </div>
-          </div>
-
-          <div className="animate-fade-up" style={{ animationDelay: '0.5s' }}>
-            <PortfolioStats metrics={metrics} />
-          </div>
         </>
       )}
 

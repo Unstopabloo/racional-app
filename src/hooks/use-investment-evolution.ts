@@ -67,13 +67,16 @@ export function usePortfolioMetrics(
   return useMemo(() => {
     if (data.length === 0) return null
 
+    const first = data[0]
     const last = data[data.length - 1]
+
+    const totalReturn = last.portfolioValue - first.portfolioValue
 
     return {
       currentValue: last.portfolioValue,
       totalContributions: last.contributions,
-      totalReturn: last.portfolioValue - last.contributions,
-      totalReturnPct: ((last.portfolioIndex - 100) / 100) * 100,
+      totalReturn,
+      totalReturnPct: (totalReturn / first.portfolioValue) * 100,
       dailyReturn: last.dailyReturn,
     }
   }, [data])

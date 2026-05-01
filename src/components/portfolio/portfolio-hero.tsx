@@ -1,13 +1,25 @@
 import { TrendingUp, TrendingDown } from 'lucide-react'
-import type { PortfolioMetrics } from '@/core/investment-evolution/investment-evolution.domain'
+import type {
+  PeriodFilter,
+  PortfolioMetrics,
+} from '@/core/investment-evolution/investment-evolution.domain'
 import { formatCurrency, formatPercent } from '@/lib/format'
+
+const PERIOD_LABELS: Record<PeriodFilter, string> = {
+  '1M': 'último mes',
+  '3M': 'últimos 3 meses',
+  '6M': 'últimos 6 meses',
+  YTD: 'en el año',
+  ALL: 'desde el inicio',
+}
 
 interface PortfolioHeroProps {
   metrics: PortfolioMetrics | null
   isLoading: boolean
+  period: PeriodFilter
 }
 
-export function PortfolioHero({ metrics, isLoading }: PortfolioHeroProps) {
+export function PortfolioHero({ metrics, isLoading, period }: PortfolioHeroProps) {
   if (isLoading) {
     return (
       <div className="relative py-20 text-center">
@@ -68,9 +80,13 @@ export function PortfolioHero({ metrics, isLoading }: PortfolioHeroProps) {
           {formatCurrency(metrics.totalReturn)}
         </span>
         <span className="text-xs text-[var(--racional-gray)]">
-          desde el inicio
+          {PERIOD_LABELS[period]}
         </span>
       </div>
+
+      <p className="relative mt-6 text-[10px] font-medium uppercase tracking-[0.3em] text-[var(--racional-gray)]">
+        Contribuciones: {formatCurrency(metrics.totalContributions)}
+      </p>
     </div>
   )
 }
